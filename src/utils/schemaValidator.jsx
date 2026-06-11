@@ -24,6 +24,7 @@ const VALID_CONFIG_KEYS = new Set([
     'enableToneAndStress', 'functionWords', 'calendarSystem',
     'stressRules', 'toneRules', 'isPublic', 'conlangIcon', 'parentId',
     'vowelHarmonyMode', 'vowelHarmonySets', 'vowelHarmonyOverrideWordClasses', 'vowelHarmonyOverrideTags',
+    'installedGrammarPatterns',
     'backupSettings'
 ]);
 

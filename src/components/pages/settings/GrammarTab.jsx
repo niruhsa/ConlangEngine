@@ -2,9 +2,10 @@ import React from 'react';
 import Card from '../../UI/Card/Card.jsx';
 import Infobox from '../../UI/Infobox/Infobox.jsx';
 import RulesManager from './grammarMatrix/RulesManager.jsx';
+import GrammarPatternLibrary from './grammarPatterns/GrammarPatternLibrary.jsx';
 import Input from '../../UI/Input/Input.jsx';
 import Button from '../../UI/Buttons/Buttons.jsx';
-import { TextInitial, TextAlignStart, Users, Languages, Info } from 'lucide-react';
+import { TextInitial, TextAlignStart, Users, Languages, Info, Sparkles } from 'lucide-react';
 import { useConfigStore } from '@/store/useConfigStore.jsx';
 import './grammartab.css';
 
@@ -20,6 +21,12 @@ export default function GrammarTab(){
 
     return (
         <div className="grammar-tab-container">
+            
+            {/* --- GRAMMAR PATTERN LIBRARY --- */}
+            <Card>
+                <h2 className="flex sg-title"><Sparkles /> Grammar Pattern Library</h2>
+                <GrammarPatternLibrary />
+            </Card>
             
             {/* --- MORPHOLOGY & RULES --- */}
             <Card>
