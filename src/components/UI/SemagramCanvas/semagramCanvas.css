@@ -1,0 +1,21 @@
+.semagram-canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: var(--s1);
+    border: 1px solid var(--bd);
+    border-radius: var(--rad-sm);
+}
+
+.semagram-canvas .sg-stroke {
+    fill: none;
+    stroke: var(--tx);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.semagram-canvas .sg-fill {
+    fill: var(--tx);
+    stroke: none;
+}

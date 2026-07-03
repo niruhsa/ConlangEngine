@@ -1,16 +1,20 @@
 // src/components/UI/ScriptManager/ScriptManager.jsx
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useConfigStore } from '../../../store/useConfigStore.jsx';
-import { SCRIPT_TYPES, normalizeScriptName, getDefaultScriptId } from '../../../utils/scriptResolver.js';
-import { Plus, Trash2, Edit2, Check, X, Copy, AlertTriangle, GripVertical, Star } from 'lucide-react';
+import { SCRIPT_TYPES, getDefaultScriptId } from '../../../utils/scriptResolver.js';
+import { Plus, Trash2, Edit2, Check, X, Copy, AlertTriangle, GripVertical, Star, Fish } from 'lucide-react';
 import toast from 'react-hot-toast';
 import './scriptManager.css';
 
 const TYPE_LABELS = {
     alphabetic: 'Alphabetic',
+    abjad: 'Abjad',
+    abugida: 'Abugida',
     syllabic: 'Syllabic',
     logographic: 'Logographic',
     featural_block: 'Featural Block',
+    semagraphic: 'Semagraphic (2D)',
 };
 
 export default function ScriptManager() {
@@ -20,6 +24,7 @@ export default function ScriptManager() {
     const removeScriptSystem = useConfigStore(state => state.removeScriptSystem);
     const updateScriptSystem = useConfigStore(state => state.updateScriptSystem);
     const setDefaultScriptSystem = useConfigStore(state => state.setDefaultScriptSystem);
+    const navigate = useNavigate();
 
     const [editingId, setEditingId] = useState(null);
     const [editName, setEditName] = useState('');
@@ -142,7 +147,7 @@ export default function ScriptManager() {
         setDraggingId(null);
     };
 
-    const renderCard = (script, isDefaultSlot) => {
+    const renderCard = (script) => {
         const isDefault = script.id === defaultScriptId;
         const isEditing = editingId === script.id;
         const ruleCount = getRuleCount(script.id);
@@ -246,6 +251,11 @@ export default function ScriptManager() {
                                 <option key={t} value={t}>{TYPE_LABELS[t] || t}</option>
                             ))}
                         </select>
+                        {script.type === 'semagraphic' && (
+                            <button className="script-btn" title="Edit in Semagram Studio" onClick={() => navigate('/semagram')}>
+                                <Fish size={14} />
+                            </button>
+                        )}
                         <div className="script-card-meta-spacer" />
                         <button
                             className={`script-default-btn ${isDefault ? 'script-default-btn-active' : ''}`}
@@ -285,7 +295,7 @@ export default function ScriptManager() {
                         onDrop={handleDropOnDefault}
                     >
                         <div className={dragOverDefault ? 'script-card-ghost-slot' : ''}>
-                            {renderCard(defaultScript, true)}
+                            {renderCard(defaultScript)}
                         </div>
                         <div className={`script-drop-separator ${dragOverDefault ? 'script-drop-separator-visible' : ''}`}>
                             <span className="script-drop-separator-label">Drop to make default</span>
@@ -302,10 +312,10 @@ export default function ScriptManager() {
                         {/* Ghost preview: current default slides here when dragging over default slot */}
                         {dragOverDefault && draggingId && defaultScript && (
                             <div className="script-card-ghost-preview">
-                                {renderCard(defaultScript, false)}
+                                {renderCard(defaultScript)}
                             </div>
                         )}
-                        {otherScripts.map(script => renderCard(script, false))}
+                        {otherScripts.map(script => renderCard(script))}
                     </div>
                 </div>
             )}

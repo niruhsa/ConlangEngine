@@ -42,6 +42,7 @@ const SemanticExplorer = lazy(() => import('./components/pages/lexicon/SemanticE
 const ExplorePage = lazy(() => import('./components/pages/explore/ExplorePage.jsx'));
 const OnboardingWizard = lazy(() => import('./components/pages/onboarding/OnboardingWizard.jsx'));
 const PhrasesTab = lazy(() => import('./components/pages/phrases/PhrasesTab.jsx'));
+const SemagramTab = lazy(() => import('./components/pages/semagram/SemagramTab.jsx'));
 
 // Animation wrapper for routes
 const AnimatedPage = ({ children }) => (
@@ -76,7 +77,8 @@ export const ALLOWED_REDIRECTS = [
   '/semantic',
   '/explore',
   '/onboarding',
-  '/phrases'
+  '/phrases',
+  '/semagram'
 ];
 
 function App(){
@@ -252,6 +254,7 @@ function App(){
               <Route path="/rootmap" element={<AnimatedPage><EtymologyTab /></AnimatedPage>} />
               <Route path="/phrases" element={<AnimatedPage><PhrasesTab /></AnimatedPage>} />
               <Route path="/analyzer" element={<AnimatedPage><AnalyzerTab /></AnimatedPage>} />
+              <Route path="/semagram" element={<AnimatedPage><SemagramTab /></AnimatedPage>} />
               <Route path="/reader" element={<AnimatedPage><GlosserTab /></AnimatedPage>} />
               <Route path="/wiki" element={<AnimatedPage><WikiTab /></AnimatedPage>} />
               <Route path="/study" element={<AnimatedPage><StudyTab /></AnimatedPage>} />

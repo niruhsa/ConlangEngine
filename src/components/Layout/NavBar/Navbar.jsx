@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { 
     Home, Languages, Settings, PlusCircle, Book, 
     Sparkles, Activity, Map, BookOpen, Library, Layers,
-    Lock, HelpCircle, Sun, Moon, Link2, Compass, MessageSquare
+    Lock, HelpCircle, Sun, Moon, Link2, Compass, MessageSquare, Fish
 } from 'lucide-react';
 import { useConfigStore } from '@/store/useConfigStore.jsx';
 import { supabase } from '@/utils/supabaseClient.js';
@@ -34,6 +34,7 @@ const NAV_GROUPS = [
         items: [
             { id: '/generator', label: 'Generator', Icon: Sparkles },
             { id: '/orthography', label: 'Orthography & Numbers', Icon: Languages },
+            { id: '/semagram', label: 'Semagram', Icon: Fish },
             { id: '/analyzer', label: 'Analyzer', Icon: Activity },
             { id: '/rootmap', label: 'Root Map', Icon: Map },
             { id: '/aligner', label: 'Sentence Mapper', Icon: Link2 },

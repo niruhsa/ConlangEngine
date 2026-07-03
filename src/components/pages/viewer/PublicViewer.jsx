@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { supabase } from '@/utils/supabaseClient.js';
-import { BookOpen, Globe, User, Search, Layers, PenTool, ChevronDown, Volume2, Type, Hash, AlignLeft, BrainCircuit, FileText, Map, Zap, ArrowLeft, Loader2, Calendar, Clock } from 'lucide-react';
+import { BookOpen, Globe, User, Search, Layers, PenTool, ChevronDown, Volume2, Type, Hash, AlignLeft, BrainCircuit, FileText, Map, Zap, ArrowLeft, Loader2, Calendar, Clock, Fish } from 'lucide-react';
 import { playAzureTTS } from '@/utils/azureTTS.js';
 import DOMPurify from 'dompurify';
 import { getConlangIcon } from '../../../utils/iconMap.jsx';
 import { usePublicThemeInjector, usePublicFontInjector } from '../../../hooks/usePublicInjectors.jsx';
 import { useTransliterator } from '../../../hooks/useTransliterator.jsx';
 import { renderWordInScript } from '../../../utils/scriptRendering.js';
+import SemagramCanvas from '../../UI/SemagramCanvas/SemagramCanvas.jsx';
+import { validateOps } from '../../../utils/semagram/opSchema.js';
 import { generateBlockFontData } from '../../../utils/blockFontGenerator.jsx';
 import PublicFlashcards from './PublicFlashcards.jsx';
 import ExercisePlayer from '../study/ExercisePlayer.jsx';
@@ -348,6 +350,29 @@ export default function PublicViewer() {
                                         <div className="pv-phono-value">{config.verbMarker}</div>
                                     </div>
                                 )}
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                {/* SEMAGRAPHIC WRITING — renders precomputed ops only; never runs shared Lua */}
+                {Array.isArray(config.scriptSystems)
+                    && config.scriptSystems.some((s) => s.type === 'semagraphic' && s.semagram?.cachedOps?.length > 0) && (
+                    <section className="pv-section">
+                        <div className="pv-section-header">
+                            <Fish size={20} className="pv-section-icon" />
+                            <h2 className="pv-section-title">Semagraphic Writing</h2>
+                        </div>
+                        <div className="pv-section-body">
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                                {config.scriptSystems
+                                    .filter((s) => s.type === 'semagraphic' && s.semagram?.cachedOps?.length > 0)
+                                    .map((s) => (
+                                        <div key={s.id} style={{ background: 'var(--s1)', border: '1px solid var(--bd)', borderRadius: '8px', padding: '1rem' }}>
+                                            <div style={{ fontWeight: 600, color: 'var(--tx2)', marginBottom: '0.5rem' }}>{s.name}</div>
+                                            <SemagramCanvas ops={validateOps(s.semagram.cachedOps)} viewBox={s.semagram.viewBox || '0 0 400 200'} />
+                                        </div>
+                                    ))}
                             </div>
                         </div>
                     </section>

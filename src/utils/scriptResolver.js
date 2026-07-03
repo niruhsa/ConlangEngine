@@ -9,6 +9,7 @@ export const SCRIPT_TYPES = [
     'syllabic',
     'logographic',
     'featural_block',
+    'semagraphic',
 ];
 
 export const LEGACY_SCRIPT_TYPE_ALIASES = {
